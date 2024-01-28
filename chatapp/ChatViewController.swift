@@ -18,19 +18,16 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         subscribeForKeyboardNotifcations()
         chatView.dataSource = chatViewModel
+        chatView.delegate = self
         chatViewModel.delegate = self
-        let chatFlowLayout = ChatFlowLayout()
-        chatFlowLayout.messagePropertyProvider = chatViewModel
-        chatFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        chatFlowLayout.minimumInteritemSpacing = 10
-        chatFlowLayout.minimumLineSpacing = 10
-        chatView.collectionViewLayout = chatFlowLayout
+        chatView.collectionViewLayout = configLayout()
         chatView.contentInsetAdjustmentBehavior = .always
     }
 
     @IBAction func onSend(_ sender: Any) {
         guard let textToSend = messageField.text else { return }
         chatViewModel.send(text: textToSend)
+        messageField.text = ""
     }
 
     private func subscribeForKeyboardNotifcations() {
@@ -58,10 +55,35 @@ class ChatViewController: UIViewController {
     @objc func keyboardWillHide(_ notification: NSNotification) {
         inputComponentBottomConstraint.constant = 0
     }
+
+    private func configLayout() -> UICollectionViewCompositionalLayout {
+        var config = UICollectionLayoutListConfiguration(appearance: .sidebar)
+        config.headerMode = .firstItemInSection
+
+        let layout = UICollectionViewCompositionalLayout.list(using: config)
+        
+        return layout
+    }
 }
+
+
+extension ChatViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        true
+    }
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfiguration configuration: UIContextMenuConfiguration, highlightPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+        let menuItem = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 44))
+        menuItem.text = "menu item"
+        let preview = UITargetedPreview(view: menuItem)
+        return preview
+    }
+}
+
 
 extension ChatViewController: ChatViewModelDelegate {
     func needToRefresh() {
         chatView.reloadData()
+        chatView.scrollToItem(at: IndexPath(row: chatViewModel.messagesFlow.count - 1, section: 0), at: .bottom, animated: true)
     }
 }

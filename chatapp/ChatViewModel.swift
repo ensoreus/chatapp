@@ -51,27 +51,6 @@ extension ChatViewModel: UICollectionViewDataSource {
     }
 }
 
-extension ChatViewModel: MessagePropertiesProvider {
-    func messageDirection(index: Int) -> MessageDirection {
-        if messagesFlow.isEmpty { return .output }
-        return messagesFlow[index].direction
-    }
-
-    func messageWidth(index: Int, maxWidth: CGFloat) -> CGFloat {
-        let defaultLineHeight: CGFloat = 22
-        let defaultFontSize: CGFloat = 14
-        let minWidth: CGFloat = 150
-
-        if messagesFlow.isEmpty { return 0.0 }
-        let text = messagesFlow[index].text
-        let nsString = NSString(string: text)
-        let boundingBox = CGSize(width: maxWidth, height: defaultLineHeight)
-        let width = nsString.boundingRect(with: boundingBox, options:.usesDeviceMetrics, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: defaultFontSize)], context: nil).width
-
-        return max(width, minWidth)
-    }
-}
-
 extension ChatViewModel: ContactChatDelegate {
     func contact(contact: Contact, receivedText: String) {
         let message = Message(direction: contact.deviceOwner ? .output : .input, text: receivedText)

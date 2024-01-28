@@ -34,7 +34,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="39"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur" textAlignment="center" selectable="NO" layoutManager="textKit1" translatesAutoresizingMaskIntoConstraints="NO" id="L9R-hF-csp">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9R-hF-csp">
                                                     <rect key="frame" x="3" y="3" width="370" height="33"/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -63,10 +63,15 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
+                                            <outlet property="leadingInset" destination="Sid-aW-wP3" id="FhH-zP-Qod"/>
                                             <outlet property="messageTextView" destination="L9R-hF-csp" id="6Q8-6B-DPu"/>
+                                            <outlet property="trailingInset" destination="3Qa-CE-rI2" id="2k5-Gp-10P"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="M4h-8y-EIK"/>
+                                </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Lh-EZ-oYi">
                                 <rect key="frame" x="0.0" y="768" width="393" height="50"/>
@@ -78,6 +83,9 @@
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pfy-8B-JoB">
                                         <rect key="frame" x="321.66666666666669" y="7.6666666666666288" width="63.333333333333314" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="63.333333333333314" id="1rh-72-eWi"/>
+                                        </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Send"/>
                                         <connections>
